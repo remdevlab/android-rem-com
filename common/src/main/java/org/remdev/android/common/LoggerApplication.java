@@ -27,19 +27,18 @@ public class LoggerApplication extends BaseSingletonApplication {
         LogFactory.create(this.getClass()).w("start app!");
     }
 
-    private int getFileSizeMB() {
+    protected int getFileSizeMB() {
         return 2;
     }
 
     @NonNull
-    private String getLogsDir() {
+    protected String getLogsDir() {
         return Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "logs";
     }
 
     @NonNull
-    private String getLogFileName() {
+    protected String getLogFileName() {
         return "test-logs.log";
     }
-
 
 }
