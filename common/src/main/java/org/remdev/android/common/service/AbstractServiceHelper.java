@@ -70,7 +70,7 @@ public abstract class AbstractServiceHelper {
         mContext = context.getApplicationContext();
     }
 
-    protected abstract String getAction();
+    protected abstract Class<?> getAction();
 
     protected abstract Messenger getIncomingMessenger();
 
@@ -140,7 +140,7 @@ public abstract class AbstractServiceHelper {
         mPendingRequests.add(new PendingRequest(msgCode, listener, requestData));
         if (mBindingState == BindingState.UNBOUND) {
             mBindingState = BindingState.BINDING;
-            mContext.bindService(new Intent(getAction()), mConnection, Context.BIND_AUTO_CREATE);
+            mContext.bindService(new Intent(mContext, getAction()), mConnection, Context.BIND_AUTO_CREATE);
         }
     }
 
