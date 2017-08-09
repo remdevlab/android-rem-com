@@ -1,0 +1,2 @@
+### timber
+-dontwarn org.jetbrains.annotations.**

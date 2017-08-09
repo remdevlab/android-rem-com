@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">common-lib</string>
+    <string name="dialog_please_wait">Please wait...</string>
+</resources>
