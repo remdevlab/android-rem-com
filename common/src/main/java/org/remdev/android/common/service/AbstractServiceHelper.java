@@ -144,6 +144,10 @@ public abstract class AbstractServiceHelper {
         }
     }
 
+    public void unbind(){
+        mContext.unbindService(mConnection);
+    }
+
     private static class PendingRequest {
 
         private int mMsgCode;
