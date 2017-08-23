@@ -15,6 +15,7 @@ after_success:
 branches:
   except:
   - gh-pages
+  - feature/utils
 notifications:
   email: false
 sudo: false

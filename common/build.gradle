@@ -49,6 +49,7 @@ dependencies {
     //Material dialogs
     compile('com.github.afollestad.material-dialogs:core:0.8.6.2@aar') { transitive = true }
     compile('com.github.afollestad.material-dialogs:commons:0.8.6.2@aar') { transitive = true }
+    compile ('com.google.code.gson:gson:2.8.1')
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
