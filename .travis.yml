@@ -15,6 +15,7 @@ after_success:
 branches:
   except:
   - gh-pages
+  - samples/kotlin-app
 notifications:
   email: false
 sudo: false
