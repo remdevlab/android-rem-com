@@ -1,18 +1,15 @@
 package org.remdev.android.commander
 
+import okhttp3.ResponseBody
 import org.remdev.android.commander.models.InteractionResult
-import org.remdev.android.commander.utils.ConversionUtils
-import org.remdev.timlog.Log
+import org.remdev.android.commander.utils.fromJson
 import org.remdev.timlog.LogFactory
-
+import retrofit2.Call
+import retrofit2.Response
 import java.io.IOException
 import java.net.HttpURLConnection
 import java.net.NoRouteToHostException
 import java.net.SocketTimeoutException
-
-import okhttp3.ResponseBody
-import retrofit2.Call
-import retrofit2.Response
 
 abstract class BaseRequestExecutor {
 
@@ -77,7 +74,7 @@ abstract class BaseRequestExecutor {
                 } else if (expectedBodyClass == String::class.java) {
                     bean = stringBody
                 } else {
-                    bean = ConversionUtils.fromJson(stringBody, expectedBodyClass)
+                    bean = fromJson(stringBody, expectedBodyClass)
                 }
                 @Suppress("UNCHECKED_CAST")
                 result.body = bean as T?

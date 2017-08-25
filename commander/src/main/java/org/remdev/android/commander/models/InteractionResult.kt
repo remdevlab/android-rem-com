@@ -2,7 +2,9 @@ package org.remdev.android.commander.models;
 
 import org.remdev.android.commander.ResultCodes
 import org.remdev.android.commander.annotations.POJO
-import org.remdev.android.commander.utils.ConversionUtils
+import org.remdev.android.commander.utils.fromJson
+import org.remdev.android.commander.utils.getClass
+import org.remdev.android.commander.utils.toJson
 import org.remdev.timlog.Log
 import org.remdev.timlog.LogFactory
 
@@ -19,10 +21,10 @@ open class InteractionResult<T: Any?> : JsonSerializable<InteractionResult<T>> {
                 FIELD_ERROR_CODE to errorCode.toString()
         )
         payload?.let {
-            map.put(FIELD_PAYLOAD_CLASS, ConversionUtils.getClass(it!!).name)
-            map.put(FIELD_PAYLOAD, ConversionUtils.toJson(it))
+            map.put(FIELD_PAYLOAD_CLASS, getClass(it!!).name)
+            map.put(FIELD_PAYLOAD, toJson(it))
         }
-        return ConversionUtils.toJson(map)
+        return toJson(map)
     }
 
     companion object {
@@ -38,15 +40,15 @@ open class InteractionResult<T: Any?> : JsonSerializable<InteractionResult<T>> {
             val res = InteractionResult<R>()
             res.code = ResultCodes.CODE_OK
             res.errorCode = 0
-            res.payload = null
+            res.payload = payload
             return res
         }
 
-        fun error() : InteractionResult<Any?> = error(0)
+        fun <R> error() : InteractionResult<R?> = error(0)
 
-        fun error(errorCode: Int): InteractionResult<Any?> = error(errorCode, null)
+        fun <R> error(errorCode: Int): InteractionResult<R?> = error(errorCode, null)
 
-        fun <R> error(@POJO payload: R?): InteractionResult<Any?> = error(0, payload)
+        fun <R> error(@POJO payload: R?): InteractionResult<R?> = error(0, payload)
 
         fun <R> error(errorCode: Int, @POJO payload: R?): InteractionResult<R> {
             val result = InteractionResult<R>()
@@ -60,7 +62,7 @@ open class InteractionResult<T: Any?> : JsonSerializable<InteractionResult<T>> {
             if (json == null) {
                 return null
             }
-            val map = ConversionUtils.fromJson(json, Map::class.java)
+            val map = fromJson(json, Map::class.java)
             if (map == null) {
                 return null;
             }
@@ -76,7 +78,7 @@ open class InteractionResult<T: Any?> : JsonSerializable<InteractionResult<T>> {
                 try {
                     @Suppress("UNCHECKED_CAST")
                     val clazz = Class.forName(className) as Class<T>
-                    payload = ConversionUtils.fromJson(payloadJson, clazz)
+                    payload = fromJson(payloadJson, clazz)
                 } catch (e: ClassNotFoundException) {
                     log.e("Could not found class %s", className)
                     throw IllegalArgumentException("Invalid json: "+ json)

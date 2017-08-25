@@ -2,7 +2,8 @@ package org.remdev.android.commander.models;
 
 import android.os.Bundle;
 
-import org.remdev.android.commander.utils.ConversionUtils;
+import static org.remdev.android.commander.utils.ConversionUtilsKt.fromJson;
+import static org.remdev.android.commander.utils.ConversionUtilsKt.toJson;
 
 public class MessageBundle<T> {
 
@@ -30,7 +31,7 @@ public class MessageBundle<T> {
             if (JsonSerializable.class.isAssignableFrom(payload.getClass())) {
                 result.putString(EXTRA_RESULT_DATA, ((JsonSerializable) payload).toJson());
             } else {
-                result.putString(EXTRA_RESULT_DATA, ConversionUtils.Companion.toJson(payload));
+                result.putString(EXTRA_RESULT_DATA, toJson(payload));
             }
         }
         return result;
@@ -60,7 +61,7 @@ public class MessageBundle<T> {
                 if (InteractionResult.class.isAssignableFrom(cls)) {
                     payload = (T) InteractionResult.Companion.parseFromJson(jsonData);
                 } else {
-                    payload = ConversionUtils.Companion.fromJson(jsonData, cls);
+                    payload = fromJson(jsonData, cls);
                 }
             } catch (ClassNotFoundException e) {
                 payload = null;
