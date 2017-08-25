@@ -9,7 +9,6 @@ import org.remdev.android.kotlinapp.models.InteractionResult
 import org.remdev.android.kotlinapp.models.WeatherData
 import org.remdev.android.kotlinapp.rest.WeatherAPI
 import org.remdev.android.kotlinapp.rest.buildRestApi
-import java.net.SocketException
 
 class WeatherLoader (
         private val args : Bundle,
@@ -37,7 +36,7 @@ class WeatherLoader (
             cityData?.let {
                 return loadWeatherItems(api, it)
             } ?: return InteractionResult.error(StatusCodes.ERROR_CODE_CITY_NOT_FOUND)
-        } catch (e: SocketException) {
+        } catch (e: Throwable) {
             return InteractionResult.error(StatusCodes.ERROR_CODE_CONNECTION_BROKEN);
         }
     }
@@ -51,7 +50,7 @@ class WeatherLoader (
                 return InteractionResult.success(weatherData)
             }
             return InteractionResult.error(StatusCodes.ERROR_CODE_CITY_NOT_FOUND)
-        } catch (e: SocketException) {
+        } catch (e: Throwable) {
             return InteractionResult.error(StatusCodes.ERROR_CODE_CONNECTION_BROKEN);
         }
     }
