@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Locale;
 
 public class RandomTextLoader extends UniversalLoader<String> {
 
@@ -28,7 +29,7 @@ public class RandomTextLoader extends UniversalLoader<String> {
         int limit = data.getInt(ARG_WORDS_LIMIT);
         URL url;
         try {
-            url = new URL("http://loripsum.net/generate.php?p=500&l=long");
+            url = new URL("https://loripsum.net/generate.php?p=100");
         } catch (MalformedURLException e) {
             throw new RuntimeException(e);
         }
@@ -53,16 +54,25 @@ public class RandomTextLoader extends UniversalLoader<String> {
                 .replaceAll("[ ]+", " ");
         String[] split = text.split(" ");
         StringBuilder data = new StringBuilder();
-        for (int i = 0; i < limit; i++) {
+        int min = Math.min(limit, split.length);
+        for (int i = 0; i < min; i++) {
             data.append(split[i]).append(' ');
         }
         return data.toString();
     }
 
     public void loadText(int wordsLimit) {
+        triggerLoad(wordsLimit, false);
+    }
+
+    public void reloadText(int wordsLimit) {
+        triggerLoad(wordsLimit, true);
+    }
+
+    private void triggerLoad(int wordsLimit, boolean reload) {
         Bundle args = BundleUtils.compose(
                 BundleUtils.of(ARG_WORDS_LIMIT, wordsLimit)
         );
-        executeLoad(args);
+        executeLoad(args, reload);
     }
 }

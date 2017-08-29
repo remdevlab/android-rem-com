@@ -19,11 +19,29 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <br>
  *     Allows to extend loader to perform simple loading of some data in a separate thread
  * <br>
- *     <b>Warning!</b>
+ *     <b>Important!</b>
  *     <br>
- *         This implementation does not cache previously loaded result. Each time
- *         {@link UniversalLoader#executeLoad(Bundle)} is called, the internal loader
- *         is restarted by {@link LoaderManager#restartLoader(int, Bundle, LoaderManager.LoaderCallbacks)}
+ *         This implementation provides two methods for triggering loading
+ *         <ul>
+ *             <li>{@link UniversalLoader#executeLoad(Bundle)}</li>
+ *             <li>{@link UniversalLoader#executeLoad(Bundle, boolean)}</li>
+ *         </ul>
+ *     <br>
+ *         The second one allows to use already loaded result by calling
+ *         <p>
+ *         {@code
+ *             compatActivity.getSupportLoaderManager().initLoader(id, args, this);
+ *         }
+ *         </p>
+ *             if the passed boolean parameter is set to false.
+ *         <br>
+ *             The first {@link UniversalLoader#executeLoad(Bundle)} just calls
+ *             {@link UniversalLoader#executeLoad(Bundle, boolean)} with flag true, which causes
+ *             <p>
+ *             {@code
+ *                  compatActivity.getSupportLoaderManager().restartLoader(id, args, this);
+ *             }
+ *             </p>
  * @param <T> type of data to be loaded
  */
 public abstract class UniversalLoader<T> implements LoaderManager.LoaderCallbacks<T> {
@@ -67,8 +85,20 @@ public abstract class UniversalLoader<T> implements LoaderManager.LoaderCallback
         return compatActivity;
     }
 
+    /**
+     * Restarts wrapped loader and reloads data ignoring already loaded result
+     * @param args the args for loading
+     */
     protected void executeLoad(Bundle args) {
-        compatActivity.getSupportLoaderManager().restartLoader(id, args, this);
+        executeLoad(args, true);
+    }
+
+    protected void executeLoad(Bundle args, boolean reload) {
+        if (reload) {
+            compatActivity.getSupportLoaderManager().restartLoader(id, args, this);
+        } else {
+            compatActivity.getSupportLoaderManager().initLoader(id, args, this);
+        }
     }
 
     public void cancel() {
@@ -79,10 +109,10 @@ public abstract class UniversalLoader<T> implements LoaderManager.LoaderCallback
     public void onLoadFinished(Loader<T> loader, T data) {
         if (lastError != null) {
             onLoadingFailed(lastError);
+            lastError = null;
         } else {
             onLoadFinished(data);
         }
-        compatActivity.getSupportLoaderManager().destroyLoader(id);
     }
 
     @Override

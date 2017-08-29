@@ -1,6 +1,8 @@
 package org.remdev.android.common;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -33,6 +35,15 @@ public class LoaderSampleActivity extends BaseActivity implements UniversalLoade
     }
 
     @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String limit = wordsLimitView.getText().toString();
+        if (limit.isEmpty() == false) {
+            loader.loadText(Integer.parseInt(limit));
+        }
+    }
+
+    @Override
     protected int getResId() {
         return R.layout.activity_loader_sample;
     }
@@ -45,7 +56,7 @@ public class LoaderSampleActivity extends BaseActivity implements UniversalLoade
             return;
         }
         showProgressDialog("Loading...");
-        loader.loadText(Integer.parseInt(limit));
+        loader.reloadText(Integer.parseInt(limit));
     }
 
     @OnTextChanged(R.id.et_words_limit)
