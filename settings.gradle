@@ -1,1 +1,1 @@
-include ':app', ':common', ':commander', ':commander-sample-app'
+include ':app', ':common', ':commander', ':commander-sample-app' , ':kotlin-sample-app'
