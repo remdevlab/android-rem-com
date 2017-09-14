@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">KotlinSampleApp</string>
+    <string name="hint_enter_city">Enter City (e.g. Minsk)</string>
+    <string name="load">Load</string>
+    <string name="enter_city_name">Enter city name first</string>
+</resources>

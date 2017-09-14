@@ -15,6 +15,7 @@ after_success:
 branches:
   except:
   - gh-pages
+  - feature/commander
   - feature/universal-loader
 notifications:
   email: false
