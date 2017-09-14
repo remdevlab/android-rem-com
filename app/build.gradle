@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
     compileSdkVersion 25
@@ -27,4 +28,5 @@ dependencies {
     })
     testCompile 'junit:junit:4.12'
     compile project (":common")
+    apt 'com.jakewharton:butterknife-compiler:8.4.0'
 }
