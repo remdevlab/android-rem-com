@@ -16,6 +16,9 @@ branches:
   except:
   - gh-pages
   - feature/utils
+  - samples/kotlin-app
+  - feature/commander
+  - feature/universal-loader
 notifications:
   email: false
 sudo: false
