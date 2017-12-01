@@ -26,6 +26,7 @@ public abstract class ButterKnifeFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         rootView = inflater.inflate(getResourceId(), container, false);
+        beforeInject();
         mUnBinder = ButterKnife.bind(this, rootView);
         afterInject();
         return rootView;
@@ -42,6 +43,9 @@ public abstract class ButterKnifeFragment extends Fragment {
     protected abstract int getResourceId();
 
     protected void afterInject() {
+    }
+
+    protected void beforeInject() {
     }
 
     protected View getRootView() {
