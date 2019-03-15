@@ -36,7 +36,7 @@ android {
 
 dependencies {
     //logger
-    implementation 'org.remdev.android:timlog:0.0.1-SNAPSHOT'
+    implementation 'org.remdev.android:timlog:0.0.2-SNAPSHOT'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
