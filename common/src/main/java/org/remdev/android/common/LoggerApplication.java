@@ -22,6 +22,7 @@ public class LoggerApplication extends BaseSingletonApplication {
                 .logFileName(getLogFileName())
                 .logsDir(getLogsDir())
                 .fileSizeMB(getFileSizeMB())
+                .historyLength(getHistoryLength())
                 .build();
         LogFactory.configure(new Timber.DebugTree(), logToFileTree);
         LogFactory.create(this.getClass()).w("start app!");
@@ -41,4 +42,7 @@ public class LoggerApplication extends BaseSingletonApplication {
         return "test-logs.log";
     }
 
+    protected int getHistoryLength() {
+        return 10;
+    }
 }
