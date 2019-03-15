@@ -27,7 +27,7 @@ class WeatherAdapter (
         holder.timeView.text = item.applicableDate
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
             = WeatherViewHolder(inflater.inflate(R.layout.layout_day_weather, parent, false))
 
     companion object {

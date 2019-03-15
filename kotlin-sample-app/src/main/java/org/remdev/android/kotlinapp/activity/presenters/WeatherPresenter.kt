@@ -28,9 +28,9 @@ class WeatherPresenter (
         return WeatherLoader(args!!, activity)
     }
 
-    override fun onLoaderReset(loader: Loader<InteractionResult<WeatherData>>?) {}
+    override fun onLoaderReset(loader: Loader<InteractionResult<WeatherData>>) {}
 
-    override fun onLoadFinished(loader: Loader<InteractionResult<WeatherData>>?, data: InteractionResult<WeatherData>?) {
+    override fun onLoadFinished(loader: Loader<InteractionResult<WeatherData>>, data: InteractionResult<WeatherData>?) {
         if (activity is BaseKotlinAppActivity) {
             activity.hideProgress()
         }

@@ -82,11 +82,11 @@ fun <T> toJson(source: T): String {
 }
 
 inline fun <reified T> View.findView(@IdRes viewId : Int) : T {
-    return findViewById(viewId) as T
+    return findViewById<View>(viewId) as T
 }
 
 inline fun <reified T> Activity.findView(@IdRes viewId : Int) : T {
-    return findViewById(viewId) as T
+    return findViewById<View>(viewId) as T
 }
 
 fun Context.toast(@StringRes mgsId : Int) {
