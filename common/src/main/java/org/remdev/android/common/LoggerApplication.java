@@ -15,6 +15,11 @@ import timber.log.Timber;
  */
 
 public class LoggerApplication extends BaseSingletonApplication {
+
+    protected static final String DEFAULT_LOG_FILE_NAME = "test-logs.log";
+    protected static final int DEFAULT_FILE_SIZE_MB = 2;
+    protected static final int DEFAULT_HISTORY_LENGTH = 10;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -22,13 +27,18 @@ public class LoggerApplication extends BaseSingletonApplication {
                 .logFileName(getLogFileName())
                 .logsDir(getLogsDir())
                 .fileSizeMB(getFileSizeMB())
+                .historyLength(getHistoryLength())
                 .build();
         LogFactory.configure(new Timber.DebugTree(), logToFileTree);
         LogFactory.create(this.getClass()).w("start app!");
     }
 
     protected int getFileSizeMB() {
-        return 2;
+        return DEFAULT_FILE_SIZE_MB;
+    }
+
+    protected int getHistoryLength() {
+        return DEFAULT_HISTORY_LENGTH;
     }
 
     @NonNull
@@ -38,7 +48,7 @@ public class LoggerApplication extends BaseSingletonApplication {
 
     @NonNull
     protected String getLogFileName() {
-        return "test-logs.log";
+        return DEFAULT_LOG_FILE_NAME;
     }
 
 }
